@@ -1,32 +1,33 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="operation-bar">
+      <span style="-webkit-app-region: drag">
+        <font-awesome-icon icon="arrows-alt" />
+      </span>
+      <span @click="closeWindow">
+        <font-awesome-icon icon="times" />
+      </span>
     </div>
-    <router-view/>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+const { ipcRenderer } = require('electron');
 
-#nav {
-  padding: 30px;
+export default {
+  name: 'App',
+  methods: {
+    closeWindow() {
+      ipcRenderer.send('close-all');
+    },
+  },
+};
+</script>
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+<style scoped lang="scss">
+#operation-bar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
 }
 </style>
